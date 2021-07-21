@@ -55,8 +55,8 @@ If you need to build for other platforms, run the following command, setting `go
 ```
 docker build \
     --output ./bin \
-    --build-arg goos=windows \
-    --build-arg goarch=arm64 \
+    --build-arg goos=<your-os-here> \
+    --build-arg goarch=<your-arch-here> \
     -f Dockerfile.build .
 ```
 

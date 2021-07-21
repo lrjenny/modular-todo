@@ -1,0 +1,25 @@
+FROM golang:1.16-alpine3.14 as init
+WORKDIR /go/src/app
+COPY ./src/orchestrator/ /go/src/app/
+
+FROM init as windows
+ENV GOOS=windows
+ENV GOARCH=amd64
+RUN go build -o /go/bin/windows-arm64.exe .
+
+FROM init as linux
+ENV GOOS=linux
+ENV GOARCH=amd64
+RUN go build -o /go/bin/linux-arm64 .
+
+FROM init as darwin
+ENV GOOS=darwin
+ENV GOARCH=amd64
+RUN go build -o /go/bin/darwin-arm64 .
+
+FROM scratch as release
+COPY --from=windows /go/bin /
+COPY --from=linux /go/bin /
+COPY --from=darwin /go/bin /
+
+FROM release

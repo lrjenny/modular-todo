@@ -1,0 +1,13 @@
+FROM golang:1.16-alpine3.14 as build
+ARG goos
+ARG goarch
+ENV GOOS=${goos}
+ENV GOARCH=${goarch}
+WORKDIR /go/src/app
+COPY ./src/orchestrator/ /go/src/app/
+RUN go build -o /go/bin/ .
+
+FROM scratch as release
+COPY --from=build /go/bin /
+
+FROM release

@@ -53,7 +53,11 @@ There are pre-built 64-bit executable binaries for Windows, MacOS, and Linux in 
 If you need to build for other platforms, run the following command, setting `goos` and `goarch` to your OS and architecture of choice.
 
 ```
-docker build --output ./bin --build-arg goos=<your-os-here> --build-arg goarch=<your-arch-here> -f Dockerfile.build .
+docker build \
+    --output ./bin \
+    --build-arg goos=windows \
+    --build-arg goarch=arm64 \
+    -f Dockerfile.build .
 ```
 
 Docker usually runs on 64-bit x86 architectures, if you're using something else I'll assume you know what you're doing. Here are some examples of supported `goos/goarch` values. Choose the values that match your machine, and plug them into the above command, replacing `<your-os-here>` and `<your-arch-here>` with the appropriate values.
@@ -63,7 +67,11 @@ Docker usually runs on 64-bit x86 architectures, if you're using something else 
 Example for 64-bit Windows:
 
 ```
-docker build --output ./bin --build-arg goos=windows --build-arg goarch=amd64 -f Dockerfile.build .
+docker build \
+    --output ./bin \
+    --build-arg goos=windows \
+    --build-arg goarch=amd64 \
+    -f Dockerfile.build .
 ```
 
 An executable binary for the platform/architecture you selected will be built in a temporary docker container, and output to the `/bin` folder.
